@@ -5,6 +5,8 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
+    networks:
+      - podscripts
     user: "0"
     command: >
       bash -c '
@@ -59,6 +61,8 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
+    networks:
+      - podscripts
     ports:
       - 9200:9200
     environment:
@@ -107,6 +111,8 @@ services:
     volumes:
       - certs:/usr/share/kibana/config/certs
       - kibanadata:/usr/share/kibana/data
+    networks:
+      - podscripts
     ports:
       - 5601:5601
     environment:
@@ -133,3 +139,7 @@ volumes:
     driver: local
   kibanadata:
     driver: local
+
+networks:
+  podscripts:
+    driver: bridge
